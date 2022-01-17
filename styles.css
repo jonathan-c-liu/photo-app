@@ -1,0 +1,236 @@
+body {
+    margin: 0;
+    padding-top: 80px;
+    background-color: #f0f0f0;
+    font-family: "Balsamiq Sans", Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-family: Comfortaa;
+}
+
+h2 {
+    font-family: Comfortaa;
+}
+
+/* Header */
+
+header {
+    width: calc(100% - 6vh);
+    position: fixed;
+    top: 0;
+    padding: 0 3vh;
+    background-color: white;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+header ul {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 180px;
+}
+
+header li {
+    margin-left: 10%;
+}
+
+header a {
+    text-decoration: none;
+    color: #0976db;
+}
+
+header a:active {
+    color: #83b2de;
+}
+
+header button {
+    border: none;
+    background-color: white;
+    color: blue;
+}
+
+/* Recommendations Panel */
+
+aside {
+    position: fixed;
+    left: calc(min(600px, 90% - 250px) + 6%);
+    padding: 16px 1%;
+    width: 250px;
+}
+
+#profile {
+    display: flex;
+    align-items: center;
+}
+
+aside img {
+    border-radius: 50%;
+}
+
+#profile h1 {
+    margin-left: 20px;
+}
+
+aside h3 {
+    color: grey;
+}
+
+aside section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+aside section p {
+    color: grey;
+}
+
+aside section div > * {
+    margin: -1px 0;
+}
+
+aside a {
+    text-decoration: none;
+    color: #0976db;
+}
+
+aside a:active {
+    color: #83b2de;
+}
+
+/* Main */
+
+main {
+    width: min(600px, 90% - 250px);
+    margin-left: 5%;
+}
+
+/* Stories Panel */
+
+#stories {
+    background-color: white;
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+#stories ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+#stories li {
+    text-align: center;
+    margin: 0 8px;
+}
+
+#stories img {
+    border-radius: 50%;
+    border: solid 2px lightgrey;
+}
+
+#stories p {
+    color: grey;
+    font-size: 9pt;
+    margin-bottom: 0;
+}
+
+/* Card */
+
+.card {
+    border: solid 1px lightgrey;
+    background: white;
+    margin: 5px 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.card img {
+    width: 100%;
+}
+
+.heart i {
+    margin: 2px;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    padding: 10px 15px 0 15px;
+}
+
+.content a {
+    text-decoration: none;
+    color: #0976db;
+}
+
+.content a:active {
+    color: #83b2de;
+}
+
+.time {
+    color: grey;
+}
+
+.card hr {
+    background-color: grey;
+}
+
+.comment-box {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.smile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.smile i {
+    margin-right: 10px
+}
+
+.comment-box a {
+    text-decoration: none;
+    color: #0976db;
+}
+
+.comment-box a:active {
+    color: #83b2de;
+}
+
+
+/* Mobile Phone Media Query */
+@media only screen and (max-width: 600px) {
+    aside {
+        display: none;
+    }
+    main {
+        width: 90%;
+    }
+    #stories {
+        overflow-x: scroll;
+    }
+}
+
+/* Tablet Media Query */
+@media only screen and (max-width: 1000px) {
+
+}
