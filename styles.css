@@ -60,6 +60,7 @@ aside {
     left: calc(min(600px, 90% - 250px) + 6%);
     padding: 16px 1%;
     width: 250px;
+    background-color: white;
 }
 
 #profile {
@@ -76,7 +77,7 @@ aside img {
 }
 
 aside h3 {
-    color: grey;
+    color: #333;
 }
 
 aside section {
@@ -87,7 +88,7 @@ aside section {
 }
 
 aside section p {
-    color: grey;
+    color: #333;
 }
 
 aside section div > * {
@@ -132,11 +133,11 @@ main {
 
 #stories img {
     border-radius: 50%;
-    border: solid 2px lightgrey;
+    border: solid 2px light#333;
 }
 
 #stories p {
-    color: grey;
+    color: #333;
     font-size: 9pt;
     margin-bottom: 0;
 }
@@ -144,7 +145,7 @@ main {
 /* Card */
 
 .card {
-    border: solid 1px lightgrey;
+    border: solid 1px light#333;
     background: white;
     margin: 5px 0;
 }
@@ -183,11 +184,11 @@ main {
 }
 
 .time {
-    color: grey;
+    color: #333;
 }
 
 .card hr {
-    background-color: grey;
+    background-color: #333;
 }
 
 .comment-box {
