@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Photo App</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+
+    {% include '/includes/suggestions.html' %}
+    
+    <main>
+        {% include '/includes/stories.html' %}
+
+        {% include '/includes/cards.html' %}
+    </main>
+  
+</body>
+</html>
+
+<!--  We would add a visible feature that would
+     allow users to add alt text to their posts.
+    For example, there would be an extra 
+        box under their caption
+     box where they could write an alternative 
+     description for their photo.
+     -->

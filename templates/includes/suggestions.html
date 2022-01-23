@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <aside>
+        <div id="profile">
+            <img src="{{ user.get('profile_url') }}" alt="User profile picture">
+            <h1>{{ user.get('username') }}</h1>
+        </div>
+        <h3>Suggestions for you</h3>
+
+        {% for item in suggestions %}
+            <section>
+                <img src="{{ item.get('thumb_url')}}" alt="{{ item.get('username')}} profile picture">
+                <div>
+                    <h4>{{ item.get('username') }}</h4>
+                    <p>suggested for you</p>
+                </div>
+                <a href="">follow</a>
+            </section>
+        {% endfor %}
+
+    </aside>
+</body>

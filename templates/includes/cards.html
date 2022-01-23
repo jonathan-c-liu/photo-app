@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% for item in posts %}
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ item.get('user').get('username')}}</h2>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+
+            <img src= "{{ item.get('image_url') }}" alt="{{ item.get('user').get('username') }} post picture">
+
+            <div class="content">
+                <div class="icons">
+                    <div class="heart">
+                        <i class="far fa-heart fa-lg"></i>
+                        <i class="far fa-comment fa-lg"></i>
+                        <i class="far fa-paper-plane fa-lg"></i>
+                    </div>
+                    <i class="far fa-bookmark fa-lg"></i>
+                </div>
+                
+                <p><strong>{{ item.get('likes') }} likes</strong></p>
+
+                <p><strong>{{ item.get('user').get('username') }}</strong> {{ item.get('title') }} <a href="">more</a></p>
+
+                <div>
+                    {% if item.get('comments')|length > 1 %}
+                        <a href="">View all {{ item.get('comments')|length }} comments</a>
+                        <p><strong>{{ item.get('comments')[0].get('user').get('username') }}</strong> {{ item.get('comments')[0].get('text') }}</p>
+                    {% else %}
+                        {% for comment in item.get('comments') %}
+                            <p><strong>{{ comment.get('user').get('username') }}</strong> {{ comment.get('text') }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    <p class="time">{{ item.get('display_time') }}</p>
+                </div>
+            </div>
+
+            <hr/>
+
+        <div class="comment-box">
+            <div class="smile">
+                    <i class="far fa-smile"></i>
+                    <p>Add a comment...</p>
+                </div>
+                <a href="">Post</a>
+        </div>
+        </div>
+    {% endfor %}
+</body>
