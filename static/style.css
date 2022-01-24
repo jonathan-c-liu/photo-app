@@ -16,10 +16,11 @@ h2 {
 /* Header */
 
 header {
-    width: calc(100% - 6vh);
+    box-sizing: border-box;
+    width: 100%;
     position: fixed;
     top: 0;
-    padding: 0 3vh;
+    padding: 0 3%;
     background-color: white;
     align-items: center;
     display: flex;
@@ -31,10 +32,11 @@ header ul {
     display: flex;
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 header li {
-    /* margin-left: 10%; */
+    padding-left: 10px;
 }
 
 header a {
@@ -58,7 +60,7 @@ aside {
     position: fixed;
     left: calc(min(600px, 90% - 250px) + 6%);
     padding: 16px 1%;
-    width: 250px;
+    min-width: 260px;
     background-color: white;
 }
 
@@ -71,11 +73,11 @@ aside img {
     border-radius: 50%;
 }
 
-#profile h1 {
+#profile h2 {
     margin-left: 20px;
 }
 
-aside h3 {
+aside h4 {
     color: #333;
 }
 
@@ -86,11 +88,17 @@ aside section {
     margin: 15px 0;
 }
 
-aside section p {
-    color: #333;
+.suggestion-container {
+    display: flex;
 }
 
-aside section div > * {
+.suggestion-container > * {
+    margin-right: 10px;
+}
+
+aside section p {
+    color: #333;
+    font-size: 11pt;
     margin: -1px 0;
 }
 
@@ -146,7 +154,7 @@ main {
 .card {
     border: solid 1px light#333;
     background: white;
-    margin: 5px 0;
+    margin: 20px 0;
 }
 
 .card-header {
