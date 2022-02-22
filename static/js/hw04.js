@@ -9,7 +9,7 @@ const story2Html = story => {
 
 const profile2Html = profile => {
     return `
-        <img src="${profile.image_url}" alt="User profile image">
+        <img class="pic" src="${profile.image_url}" alt="User profile image">
         <h2>${profile.username}</h2>
     `
 }
@@ -61,7 +61,7 @@ const post2Html = post => {
                         </button>
                         <button>
                             <i class="far fa-paper-plane"></i>
-                        </button>                        
+                        </button>
                     </div>
                     <div>
                         <button
@@ -97,54 +97,42 @@ const post2Html = post => {
 const modal2Html = post => {
     return `
         <div class="modal-bg">
-            <button onclick="destroyModal(event)">
+            <button
+                aria-label="Close comments"
+                onclick="destroyModal(event)"
+            >
                 <i class="fas fa-times"></i>
             </button>
             <div class="modal">
-                <img src="${post.image_url}"/>
+                <img class="pic" src="${post.image_url}" alt="Image for ${post.user.username}'s post"/>
+                <div class="content">
+                    <header>
+                        <img src="${post.user.image_url}" alt="Profile image for ${post.user.username}"/>
+                        <h3>${post.user.username}</h3>
+                    </header>
+                    <div class="comments">
+                        ${comment2Html({user: post.user, text: post.caption})}
+                        ${post.comments.map(comment2Html).join('\n')}
+                    </div>
+                </div>
             </div>
         </div>
     `;
 };
 
-const displayComments = (comments, postID) => {
-    let html = '';
-    if (comments.length > 1) {
-        html += `
-            <button class="link" data-post-id="${postID}" onclick="showPostDetail(event);">
-                view all ${comments.length} comments
-            </button>
-        `;
-    }
-    if (comments && comments.length > 0) {
-        const lastComment = comments[comments.length - 1];
-        html += `
-            <p>
-                <strong>${lastComment.user.username}</strong> 
-                ${lastComment.text}
-            </p>
-            <div>${lastComment.display_time}</div>
-        `
-    }
-    return html;
-};
-
-const displayAddComments = (postId) => {
-    const html = `
-        <div class="input-holder">
-            <input id="input-${postId}" type="text" aria-label="Add a comment" placeholder="Add a comment...">
+const comment2Html = comment => {
+    return `
+        <div class="comment-container">
+            <img src="${comment.user.thumb_url}" alt="Profile image for ${comment.user.username}"/>
+            <div>
+                <p>
+                    <strong>${comment.user.username}</strong> 
+                    ${comment.text}
+                </p>
+            </div>
         </div>
-        <button
-            class="link"
-            data-post-id=${postId}
-            aria-label="Post comment to post ${postId}"
-            onClick="addComment(event)"
-        >
-            Post
-        </button>
-    `;
-    return html;
-}
+    `
+};
 
 const reloadPost = (postId) => {
     fetch(`/api/posts/${postId}`)
@@ -298,6 +286,7 @@ const addComment = (e) => {
 
 const destroyModal = e => {
     document.querySelector('#modal-container').innerHTML = "";
+    document.body.style.overflowY = 'auto';
 };
 
 const showPostDetail = e => {
@@ -308,7 +297,45 @@ const showPostDetail = e => {
             const html = modal2Html(post);
             document.querySelector('#modal-container').innerHTML = html;
         })
-    
+    document.body.style.overflowY = 'hidden';
+};
+
+const displayComments = (comments, postID) => {
+    let html = '';
+    if (comments.length > 1) {
+        html += `
+            <button class="link" data-post-id="${postID}" onclick="showPostDetail(event);">
+                view all ${comments.length} comments
+            </button>
+        `;
+    }
+    if (comments && comments.length > 0) {
+        const lastComment = comments[comments.length - 1];
+        html += `
+            <p>
+                <strong>${lastComment.user.username}</strong> 
+                ${lastComment.text}
+            </p>
+        `
+    }
+    return html;
+};
+
+const displayAddComments = (postId) => {
+    const html = `
+        <div class="input-holder">
+            <input id="input-${postId}" type="text" aria-label="Add a comment" placeholder="Add a comment...">
+        </div>
+        <button
+            class="link"
+            data-post-id=${postId}
+            aria-label="Post comment to post ${postId}"
+            onClick="addComment(event)"
+        >
+            Post
+        </button>
+    `;
+    return html;
 };
 
 const displayStories = () => {
