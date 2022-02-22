@@ -1,21 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    padding-top: 80px;
-    background-color: #f0f0f0;
+    background-color: #f2f2f2;
     font-family: "Balsamiq Sans", Arial, Helvetica, sans-serif;
+    padding-top: 80px;
 }
 
-h1 {
-    font-family: Comfortaa;
+h1, h2, h3, h4 {
+    font-family: 'Comfortaa', cursive;
 }
 
-h2 {
-    font-family: Comfortaa;
-}
+/* Nav */
 
-/* Header */
-
-header {
+nav {
     box-sizing: border-box;
     width: 100%;
     position: fixed;
@@ -27,7 +30,7 @@ header {
     justify-content: space-between;
 }
 
-header ul {
+nav ul {
     list-style-type: none;
     display: flex;
     padding: 0;
@@ -35,20 +38,20 @@ header ul {
     box-sizing: border-box;
 }
 
-header li {
+nav li {
     padding-left: 10px;
 }
 
-header a {
+nav a {
     text-decoration: none;
     color: #0976db;
 }
 
-header a:active {
+nav a:active {
     color: #83b2de;
 }
 
-header button {
+nav button {
     border: none;
     background-color: white;
     color: blue;
@@ -120,7 +123,43 @@ main {
 
 /* Stories Panel */
 
-#stories {
+.stories {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 50vw;
+    min-width: 540px;
+    border: solid 1px #dbdbdb;
+    margin-bottom: 30px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.stories > div {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.stories > div .pic {
+    min-width: 50px;
+    min-height: 50px;
+    border: solid 3px #dbdbdb;
+    border-radius: 27px;
+}
+.stories p {
+    margin-top: 4px;
+    margin-bottom: 0px;
+    font-size: 0.80em;
+    color: #999;
+    width: 66px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+/* #stories {
     background-color: white;
     padding: 8px 0;
     overflow: hidden;
@@ -147,7 +186,7 @@ main {
     color: #333;
     font-size: 9pt;
     margin-bottom: 0;
-}
+} */
 
 /* Card */
 
