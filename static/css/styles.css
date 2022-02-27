@@ -74,13 +74,11 @@ aside {
     right: 0px;
     top: 70px;
     width: calc(40vw - 6px);
-    /* background-color: #fafafa; */
     background-color: #f2f2f2;
     height: calc(100vh - 100px);
     padding-left: 30px;
 }
 main {
-    /* margin-top: 70px; */
     width: 60vw;
     display: flex;
     flex-direction: column;
@@ -92,13 +90,12 @@ main {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     width: 50vw;
     min-width: 540px;
     border: solid 1px #dbdbdb;
     margin-bottom: 30px;
     background-color: #fff;
-    overflow: hidden;
+    overflow-x: auto;
 }
 .stories > div {
     margin-right: 20px;
@@ -274,17 +271,15 @@ aside header .pic {
     font-size: 30px;
 }
 
-/*
-1. Modal heaight dependent on picture, how to set? 
-2. How to not make it go off the side or bottom
-*/
-
 .modal {
-    background-color: white;
     display: flex;
-    margin: 10vh auto;
-    width: 95vw;
-    max-width: 1200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 60%;
+    background: white;
     border-radius: 5px;
 }
 
@@ -293,16 +288,13 @@ aside header .pic {
     height: auto;
 }
 
-.modal .content{
-    width: 360px;
-}
-
 .modal header {
     display: flex;
     align-items: center;
     padding: 10px 20px;
     margin: 0;
     border-bottom: solid 1px #dbdbdb;
+    height: 70px;
 }
 
 .modal header img {
@@ -314,9 +306,8 @@ aside header .pic {
 }
 
 .modal .comments {
-    overflow: auto;
-    position: absolute;
-    width: 360px;
+    height: calc(100% - 70px);
+    overflow-y: auto;
 }
 
 .modal .comment-container {
@@ -348,18 +339,6 @@ aside header .pic {
     .card, .stories {
         width: 75vw;
         min-width: auto;
-    }
-    .modal {
-        display: block;
-        margin: 16px 10%;
-        width: auto;
-        height: calc(100% - 32px);
-    }
-    .modal .pic {
-        height: auto;
-    }
-    .modal .content {
-        max-width: none;
     }
 }
 

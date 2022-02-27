@@ -96,10 +96,11 @@ const post2Html = post => {
 
 const modal2Html = post => {
     return `
-        <div class="modal-bg">
+        <div class="modal-bg" data-post-id="${post.id}">
             <button
+                id="close-modal-btn"
                 aria-label="Close comments"
-                onclick="destroyModal(event)"
+                onclick="closeModal(event)"
             >
                 <i class="fas fa-times"></i>
             </button>
@@ -284,18 +285,22 @@ const addComment = (e) => {
     })
 }
 
-const destroyModal = e => {
+const closeModal = e => {
+    let postId = document.querySelector(".modal-bg").dataset.postId;
+    document.getElementById(`view-comments-${postId}`).focus();
     document.querySelector('#modal-container').innerHTML = "";
     document.body.style.overflowY = 'auto';
 };
 
-const showPostDetail = e => {
+const showModal = e => {
     const postId = e.currentTarget.dataset.postId;
     fetch(`/api/posts/${postId}`)
         .then(response => response.json())
         .then(post => {
             const html = modal2Html(post);
-            document.querySelector('#modal-container').innerHTML = html;
+            let modalContainer = document.querySelector('#modal-container');
+            modalContainer.innerHTML = html;
+            document.getElementById("close-modal-btn").focus();
         })
     document.body.style.overflowY = 'hidden';
 };
@@ -304,7 +309,7 @@ const displayComments = (comments, postID) => {
     let html = '';
     if (comments.length > 1) {
         html += `
-            <button class="link" data-post-id="${postID}" onclick="showPostDetail(event);">
+            <button id="view-comments-${postID}" class="link" data-post-id="${postID}" onclick="showModal(event);">
                 view all ${comments.length} comments
             </button>
         `;
