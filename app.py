@@ -1,3 +1,6 @@
+import flask_jwt_extended  
+import decorators
+
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask, request
@@ -7,7 +10,7 @@ from flask import render_template
 import os
 from models import db, User, ApiNavigator
 from views import bookmarks, comments, followers, following, \
-    posts, profile, stories, suggestions, post_likes
+    posts, profile, stories, suggestions, post_likes, authentication, token
 
 
 
@@ -27,6 +30,23 @@ api = Api(app)
 with app.app_context():
     app.current_user = User.query.filter_by(id=12).one()
 
+#JWT config variables and manager (add after app object created):
+app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET')
+app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
+app.config["JWT_COOKIE_SECURE"] = False
+jwt = flask_jwt_extended.JWTManager(app)
+
+# defines the function for retrieving a user from the database
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    # print('JWT data:', jwt_data)
+    # https://flask-jwt-extended.readthedocs.io/en/stable/automatic_user_loading/
+    user_id = jwt_data["sub"]
+    return User.query.filter_by(id=user_id).one_or_none()
+
+# Initialize routes of 2 new views
+authentication.initialize_routes(app)
+token.initialize_routes(api)
 
 # Initialize routes for all of your API endpoints:
 bookmarks.initialize_routes(api)
@@ -42,10 +62,11 @@ suggestions.initialize_routes(api)
 
 # Server-side template for the homepage:
 @app.route('/')
+@decorators.jwt_or_login
 def home():
     return render_template(
         'starter-client.html', 
-        user=app.current_user
+        user=flask_jwt_extended.current_user
     )
 
 @app.route('/api')
@@ -53,12 +74,10 @@ def api_docs():
     navigator = ApiNavigator(app.current_user)
     return render_template(
         'api/api-docs.html', 
-        user=app.current_user,
+        user=flask_jwt_extended.current_user,
         endpoints=navigator.get_endpoints(),
         url_root=request.url_root[0:-1] # trim trailing slash
     )
-
-
 
 # enables flask app to run using "python3 app.py"
 if __name__ == '__main__':
