@@ -149,7 +149,8 @@ const followUser = (username, elem) => {
     fetch('/api/following', {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json' 
+           'Content-Type': 'application/json',
+           'X-CSRF-TOKEN': getCookie('csrf_access_token')
         },
         body: JSON.stringify({
             user_id: userId
@@ -169,7 +170,10 @@ const followUser = (username, elem) => {
 const unfollowUser = (username, elem) => {
     const followingId = elem.dataset.followingId;
     fetch(`/api/following/${followingId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -196,7 +200,8 @@ const likePost = (elem) => {
     fetch(`/api/posts/${elem.dataset.postId}/likes`, {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json' 
+           'Content-Type': 'application/json',
+           'X-CSRF-TOKEN': getCookie('csrf_access_token')
         },
     })
     .then(response => response.json())
@@ -208,7 +213,11 @@ const likePost = (elem) => {
 
 const unlikePost = (elem) => {
     fetch(`/api/posts/${elem.dataset.postId}/likes/${elem.dataset.likeId}`, {
-        method: 'DELETE'
+        method: 
+        'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -219,7 +228,6 @@ const unlikePost = (elem) => {
 
 const toggleLike = (e) => {
     const elem = e.currentTarget;
-    console.log(elem);
     if (elem.getAttribute("aria-checked") == "undefined") {
         likePost(elem);
     } else {
@@ -231,7 +239,8 @@ const bookmarkPost = (elem) => {
     fetch('/api/bookmarks', {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json' 
+           'Content-Type': 'application/json',
+           'X-CSRF-TOKEN': getCookie('csrf_access_token')
         },
         body: JSON.stringify({
             post_id: elem.dataset.postId
@@ -247,7 +256,10 @@ const bookmarkPost = (elem) => {
 const unbookmarkPost = (elem) => {
     const bookmarkId = elem.dataset.bookmarkId;
     fetch(`/api/bookmarks/${bookmarkId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -272,7 +284,8 @@ const addComment = (e) => {
     fetch(`/api/comments`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' 
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         },
         body: JSON.stringify({
             post_id: postId,
@@ -377,6 +390,22 @@ const displayPosts = () => {
             const html = posts.map(post2Html).join('\n');
             document.querySelector('#posts').innerHTML = html;
         })
+};
+
+const getCookie = key => {
+    let name = key + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 };
 
 const initPage = () => {

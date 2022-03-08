@@ -2,8 +2,9 @@ from flask import Response, request
 from flask_restful import Resource
 from views import can_view_post
 from my_decorators import handle_db_insert_error, handle_missing_or_invalid_user_id, id_is_integer_or_400_error
-from models import Following, User, db
+from models import Following, db
 import json
+import flask_jwt_extended
 
 def get_path():
     return request.host_url + 'api/posts/'
@@ -12,6 +13,7 @@ class FollowingListEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def get(self):
         followers = Following.query.filter_by(user_id=self.current_user.id).all()
         
@@ -21,6 +23,7 @@ class FollowingListEndpoint(Resource):
 
         return Response(json.dumps(data), mimetype="application/json", status=200)
     
+    @flask_jwt_extended.jwt_required()
     @handle_db_insert_error
     @handle_missing_or_invalid_user_id
     def post(self):
@@ -40,6 +43,7 @@ class FollowingDetailEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
 
+    @flask_jwt_extended.jwt_required()
     @id_is_integer_or_400_error
     def delete(self, id):
         following = Following.query.get(id)
@@ -60,11 +64,11 @@ def initialize_routes(api):
         FollowingListEndpoint, 
         '/api/following', 
         '/api/following/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )
     api.add_resource(
         FollowingDetailEndpoint, 
         '/api/following/<id>', 
         '/api/following/<id>/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )

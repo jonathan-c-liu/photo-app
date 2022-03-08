@@ -2,6 +2,7 @@ from flask import Response, request
 from flask_restful import Resource
 from models import Bookmark, db
 import json
+import flask_jwt_extended
 
 from my_decorators import handle_db_insert_error, id_is_integer_or_400_error
 from . import can_view_post
@@ -11,6 +12,7 @@ class BookmarksListEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def get(self):
         bookmarks = Bookmark.query.filter_by(user_id=self.current_user.id).all()
 
@@ -20,7 +22,8 @@ class BookmarksListEndpoint(Resource):
 
         return Response(json.dumps(data), mimetype="application/json", status=200)
 
-    @handle_db_insert_error
+    @flask_jwt_extended.jwt_required()
+    @handle_db_insert_error 
     def post(self):
         body = request.get_json()
         post_id = body.get('post_id')
@@ -43,6 +46,7 @@ class BookmarkDetailEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     @id_is_integer_or_400_error
     def delete(self, id):
         # a user can only delete their own bookmark:
@@ -65,12 +69,12 @@ def initialize_routes(api):
         BookmarksListEndpoint, 
         '/api/bookmarks', 
         '/api/bookmarks/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )
 
     api.add_resource(
         BookmarkDetailEndpoint, 
         '/api/bookmarks/<id>', 
         '/api/bookmarks/<id>',
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )

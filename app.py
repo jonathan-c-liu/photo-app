@@ -70,8 +70,9 @@ def home():
     )
 
 @app.route('/api')
+@decorators.jwt_or_login
 def api_docs():
-    navigator = ApiNavigator(app.current_user)
+    navigator = ApiNavigator(flask_jwt_extended.current_user)
     return render_template(
         'api/api-docs.html', 
         user=flask_jwt_extended.current_user,
